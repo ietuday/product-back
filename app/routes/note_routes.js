@@ -1,7 +1,9 @@
 var ObjectID = require('mongodb').ObjectID;
 
+
 module.exports = function(app, db) {
 
+    //Testing API
     app.get('/notes', (req, res) => {
         db.collection('notes').find().toArray(function(error, data) {
             if (error) {
@@ -40,6 +42,26 @@ module.exports = function(app, db) {
         });
     });
 
+    app.post('/notes/user', (req, res) => {
+        const user = {
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            email:req.body.email,
+            password:req.body.password
+        };
+
+        console.log("user : ",user);
+
+        db.collection('user').insert(user, (err, result) => {
+            if (err) {
+                res.send({ 'error': 'An error has occurred' });
+            } else {
+                console.log("result", result);
+                res.send(result.ops[0]);
+            }
+        });
+    });
+
     app.delete('/notes/:id', (req, res) => {
         const id = req.params.id;
         const details = { '_id': new ObjectID(id) };
@@ -65,3 +87,5 @@ module.exports = function(app, db) {
         });
     });
 };
+
+// Registration of User
