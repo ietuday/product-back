@@ -56,7 +56,7 @@ module.exports = function(app, db) {
             if (err) {
                 res.send({ 'error': 'An error has occurred' });
             } else {
-                console.log("result", result);
+                console.log("After Inserting Data : result", result);
                 res.send(result.ops[0]);
             }
         });
