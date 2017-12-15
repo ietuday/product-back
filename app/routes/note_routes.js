@@ -46,11 +46,11 @@ module.exports = function(app, db) {
         const user = {
             firstname: req.body.firstname,
             lastname: req.body.lastname,
-            email:req.body.email,
-            password:req.body.password
+            email: req.body.email,
+            password: req.body.password
         };
 
-        console.log("user : ",user);
+        console.log("user : ", user);
 
         db.collection('user').insert(user, (err, result) => {
             if (err) {
@@ -89,3 +89,23 @@ module.exports = function(app, db) {
 };
 
 // Registration of User
+
+app.post('/notes/user', (req, res) => {
+    const user = {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        password: req.body.password
+    };
+
+    console.log("user : ", user);
+
+    db.collection('user').insert(user, (err, result) => {
+        if (err) {
+            res.send({ 'error': 'An error has occurred' });
+        } else {
+            console.log("After Inserting Data : result", result);
+            res.send(result.ops[0]);
+        }
+    });
+});
